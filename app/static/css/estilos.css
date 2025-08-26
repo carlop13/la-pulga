@@ -1,0 +1,28 @@
+  body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+img {
+    /* Establece el tamaño inicial de la imagen */
+    transform: scale(1);
+    /* Agrega una transición suave al tamaño de la imagen */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Cuando el mouse se pase sobre la imagen, cambia su tamaño a 1.5 veces su tamaño original */
+  .img-producto:hover {
+    transform: scale(1.1);
+  }
+
+  #caja_busqueda {
+    border-radius: 10px;
+  }
+  
+  .bg-brown {
+    background-color: brown; /*Código hexadecimal para el color café*/
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}

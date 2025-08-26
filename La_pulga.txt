@@ -1,0 +1,324 @@
+create database lapulga;
+
+use lapulga;
+
+create table usuario (
+id int auto_increment not null, 
+password varchar (50),
+tipo varchar (20),
+nombre varchar (20),
+activo int,
+token varchar (32),
+constraint primary key(id));
+
+desc usuario;
+
+create table cliente(
+id int auto_increment not null,
+nombre varchar (50),
+ap varchar (30),
+am varchar (30),
+correo varchar (100),
+ciudad varchar (40),
+col varchar (40),
+calle varchar (50),
+noint varchar(20),
+noext varchar(20),
+cp varchar(20),
+foto varchar(50),
+fec_registro date,
+id_usu int,
+latitud decimal(18,12),
+longitud decimal(18,12),
+constraint primary key(id),
+constraint foreign key(id_usu) references usuario(id));
+
+desc cliente;
+
+
+create table administrador(
+id int auto_increment not null,
+nombre varchar (50),
+ap varchar (50),
+am varchar (50),
+correo varchar (100),
+foto varchar(50),
+fec_registro date,
+id_usu int,
+constraint primary key(id),
+constraint foreign key(id_usu) references usuario(id));
+
+create table categoria(
+id int auto_increment not null,
+categoria varchar(80),
+constraint primary key(id)
+);
+
+desc categoria;
+
+create table descripcion(
+id int auto_increment,
+descripcion varchar(200), 
+constraint primary key(id));
+
+desc descripcion;
+
+create table producto(
+id int auto_increment not null,
+nombre varchar(60),
+prec float(10,2),
+foto varchar(100),
+estado int,
+cantidad int,
+id_cat int,
+id_descr int,
+constraint foreign key(id_cat) references categoria(id),
+constraint foreign key(id_descr) references descripcion(id),
+constraint primary key(id)
+);
+
+desc producto;
+
+create table venta (
+id int auto_increment not null,
+fech date,
+folio int default 0,
+total float(10,2) default 0,
+id_cli int,
+envio int,
+constraint primary key(id),
+constraint foreign key(id_cli) references cliente(id));
+
+desc venta;
+
+create table telefono(
+id int auto_increment not null,
+telefono varchar (10),
+id_cli int,
+constraint primary key(id),
+constraint foreign key(id_cli) references cliente(id));
+
+desc telefono; 
+
+create table detalle_venta (
+id int auto_increment not null,
+subtotal float(10,2),
+cant int,
+prec float(10,2),
+id_vent int,
+id_pro int,
+constraint primary key(id),
+constraint foreign key(id_vent) references venta(id),
+constraint foreign key(id_pro) references producto(id)
+);
+
+desc detalle_venta;
+
+create table carrito (
+id int auto_increment,
+id_cli int,
+id_pro int,
+cantidad int,
+constraint primary key(id),
+constraint foreign key(id_cli) references cliente(id), 
+constraint foreign key(id_pro) references producto(id));
+
+desc carrito;
+
+create table lista (
+id int auto_increment,
+id_pro int, 
+id_cli int, 
+constraint primary key(id),
+constraint foreign key(id_cli) references cliente(id), 
+constraint foreign key(id_pro) references producto(id));
+
+desc lista;
+
+create table carrusel (
+id int auto_increment,
+foto varchar(100), 
+constraint primary key(id));
+
+desc carrusel;
+
+create table foto(
+id int auto_increment,
+foto varchar(150), 
+id_pro int,
+constraint primary key(id),
+constraint foreign key(id_pro) references producto(id));
+
+desc foto;
+
+
+
+
+delimiter //
+create trigger nom_us before insert on cliente
+for each row
+begin
+declare nom varchar(3);
+declare ape varchar(3);
+declare nomus varchar(60);
+declare total_elementos int;
+declare x int;
+declare num int;
+set nom = (select left(new.nombre,3));
+set ape = (select left(new.ap,3));
+set nomus =concat(nom,ape);
+set total_elementos = (select count(id) from usuario);
+set x = 1;
+set num = 1;
+while x <= total_elementos do
+if( nomus like (select nombre from usuario where id = x) ) then
+set num = num +1;
+set nomus = concat(nomus,num);
+end if;
+set x = x+1;
+end while;
+update usuario set nombre = nomus where id = new.id_usu;
+end//
+
+delimiter ;
+
+;
+
+
+delimiter //
+create trigger nom_usu before insert on administrador
+for each row
+begin
+declare nom varchar(3);
+declare ape varchar(3);
+declare nomus varchar(60);
+declare total_elementos int;
+declare x int;
+declare num int;
+set nom = (select left(new.nombre,3));
+set ape = (select left(new.ap,3));
+set nomus =concat(nom,ape);
+set total_elementos = (select count(id) from usuario);
+set x = 1;
+set num = 1;
+while x <= total_elementos do
+if( nomus like (select nombre from usuario where id = x) ) then
+set num = num +1;
+set nomus = concat(nomus,num);
+end if;
+set x = x+1;
+end while;
+update usuario set nombre = nomus where id = new.id_usu;
+end//
+
+delimiter ;
+
+;
+
+delimiter //
+create trigger nom_usuario before update on cliente
+for each row
+begin
+declare nom varchar(3);
+declare ape varchar(3);
+declare nomus varchar(60);
+declare total_elementos int;
+declare x int;
+declare num int;
+set nom = (select left(new.nombre,3));
+set ape = (select left(new.ap,3));
+set nomus = concat(nom,ape);
+set total_elementos = (select count(id) from usuario);
+set x = 1;
+set num = 1;
+while x <= total_elementos do
+if( nomus like (select nombre from usuario where id = x) ) then
+if(new.id_usu != x) then
+set num = num +1;
+set nomus = concat(nomus,num);
+end if;
+end if;
+set x = x+1;
+end while;
+update usuario set nombre = nomus where id = new.id_usu;
+end//
+
+delimiter ;
+
+;
+
+
+delimiter //
+create trigger cant before insert on detalle_venta
+for each row
+begin
+declare stock int;
+set stock = (select cantidad from producto where id = new.id_pro);
+if new.cant<=stock then 
+update producto set cantidad = cantidad - new.cant where id = new.id_pro;
+end if;
+end//
+
+delimiter ;
+
+;
+
+delimiter //
+create procedure telefonos()
+begin
+select concat(cliente.nombre," ",ap," ",am) as nombre, telefono
+from cliente
+inner join telefono on(cliente.id = telefono.id_cli)
+inner join usuario on(cliente.id_usu = usuario.id)
+where activo = 1;
+end//
+
+call telefonos//
+
+delimiter ;
+
+;
+
+
+create view datos_cliente as select cliente.id,cliente.nombre,usuario.nombre as usuario,ap,am,correo,ciudad,col,calle,noint,noext,cp,foto,fec_registro,telefono,id_usu from cliente inner join usuario on(cliente.id_usu = usuario.id) inner join telefono on (cliente.id = telefono.id_cli);
+
+
+create view `detalle_ventaa` AS select `venta`.`id` AS `idven`,`venta`.`fech` AS `fech`,`cliente`.`correo` AS `correo`,count(0) AS `numproductos`,sum((`detalle_venta`.`cant` * `detalle_venta`.`prec`)) AS `total`,`usuario`.`activo` AS `activo` from (((`venta` join `detalle_venta` on((`detalle_venta`.`id_vent` = `venta`.`id`))) join `cliente` on((`venta`.`id_cli` = `cliente`.`id`))) join `usuario` on((`cliente`.`id_usu` = `usuario`.`id`))) group by `idven`;
+
+create view venta_detalle AS select venta.id as id_vent, producto.nombre as nombre, producto.cantidad as cantidad, detalle_venta.prec as prec, (detalle_venta.cant * detalle_venta.prec) AS subtotal, detalle_venta.cant as cant from detalle_venta inner join producto on (detalle_venta.id_pro = producto.id) inner join venta on (detalle_venta.id_vent = venta.id);
+
+
+
+
+
+insert into usuario values(null,md5(12345678),"cliente","123",1,"");
+
+insert into cliente values(null,"JUANA","PEREZ","PEREZ","gabi@gmail.com","SAN MIGUEL DE ALLENDE","MENCHACA","PINOSUAREZ","1","12","37909","SIN FOTO",NOW(),1);
+
+insert into telefono values(null,"4151251922",1);
+
+insert into usuario values(null,md5(12345678),"administrador","123",1,"");
+
+insert into administrador values(null,"CARLOS","LOPEZ","TREJO","carlosguadalupelt13@gmail.com","SIN FOTO",NOW(),2);
+
+insert into categoria values (null,"MUEBLES");
+
+insert into categoria values (null,"DECORACIÓN");
+
+insert into categoria values (null,"ROPA");
+
+insert into categoria values (null,"CALZADO");
+
+insert into categoria values (null,"JUGUETES");
+
+insert into categoria values (null,"OTRA");
+
+insert into carrusel values(null,"nuevo.jpg");
+
+insert into carrusel values(null,"nuevo2.jpg");
+
+insert into carrusel values(null,"nuevo3.jpg");
+
+insert into descripcion values(null," ");
+
+insert into producto values(null," ",0," ",0,0,6,1);

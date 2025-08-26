@@ -1,0 +1,72 @@
+
+Modelo Entidad-Relación (ER):
+
+     +--------------+      +--------------+      +--------------+
+     |   Usuario    |      |   Cliente    |      | Administrador |
+     +--------------+      +--------------+      +--------------+
+     | id (PK)      |      | id (PK)      |      | id (PK)      |
+     | password     |      | nombre       |      | nombre       |
+     | tipo         |      | ap           |      | ap           |
+     | nombre       |      | am           |      | am           |
+     | activo       |      | correo       |      | correo       |
+     | token        |      | ciudad       |      | foto         |
+     +--------------+      | col          |      | fec_registro |
+                           | calle        |      | id_usu (FK)  |
+                           | noint        |      +--------------+
+                           | noext        |
+                           | cp           |
+                           | foto         |
+                           | fec_registro |
+                           | id_usu (FK)  |
+                           +--------------+
+
+
+
+     +--------------+      +-----------+      +------------+
+     |  Categoria   |      |  Producto |      |  Carrusel  |
+     +--------------+      +-----------+      +------------+
+     | id (PK)      |      | id (PK)   |      | id (PK)    |
+     | categoria    |      | nombre    |      | foto       |
+     +--------------+      | prec      |      +------------+
+                           | foto      |
+                           | estado    |
+                           | cantidad  |
+                           | id_cat (FK)|
+                           +-----------+
+
+
+     +-----------+        +---------------+
+     |   Venta   |        | Detalle_Venta |
+     +-----------+        +---------------+
+     | id (PK)   |        | id (PK)       |
+     | fech      |        | subtotal      |
+     | folio     |        | cant         |
+     | total     |        | prec         |
+     | id_cli (FK)|        | id_vent (FK) |
+     | envio     |        | id_pro (FK)  |
+     +-----------+        +---------------+
+
+
+     +---------------+       +------------+
+     |   Telefono    |       |   Lista    |
+     +---------------+       +------------+
+     | id (PK)       |       | id (PK)    |
+     | telefono      |       | id_pro (FK)|
+     | id_cli (FK)   |       | id_cli (FK)|
+     +---------------+       +------------+
+
+
+
+
+Modelo Relacional:
+
+Usuario (id PK, password, tipo, nombre, activo, token)
+Cliente (id PK, nombre, ap, am, correo, ciudad, col, calle, noint, noext, cp, foto, fec_registro, id_usu FK)
+Administrador (id PK, nombre, ap, am, correo, foto, fec_registro, id_usu FK)
+Categoria (id PK, categoria)
+Producto (id PK, nombre, prec, foto, estado, cantidad, id_cat FK)
+Venta (id PK, fech, folio, total, id_cli FK, envio)
+Detalle_Venta (id PK, subtotal, cant, prec, id_vent FK, id_pro FK)
+Telefono (id PK, telefono, id_cli FK)
+Lista (id PK, id_pro FK, id_cli FK)
+Carrusel (id PK, foto)

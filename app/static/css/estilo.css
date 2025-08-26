@@ -1,0 +1,222 @@
+/*DiseÃ±o para navbar*/
+:root {
+    --body-bg-color: #1a1c1d;
+    --text-color: #aaaebc;
+    --hr-color: #26292a;
+    --transition-duration: 0.3s;
+    --transition-delay: 0.2s;
+    --red: #e74c3c;
+  }
+
+  body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+  
+  ul {
+    list-style: none;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+    
+  }
+  
+  .menu li {
+    margin-right: 59px;
+  }
+  
+  hr {
+    border-color: var(--hr-color);
+    margin: 20px 0;
+  }
+  
+  .menu {
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+  
+  .menu a {
+    position: relative;
+    display: block;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .menu .border {
+    position: absolute;
+    left: 0;
+    background: currentColor;
+    transition: transform var(--transition-duration) ease-in-out;
+  }
+  
+  .menu .border-top,
+  .menu .border-bottom {
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+  }
+  
+  .menu .border-left,
+  .menu .border-right {
+    width: 1px;
+    height: 100%;
+    transform: scaleY(0);
+  }
+  
+  .menu .border-top,
+  .menu .border-left,
+  .menu .border-right {
+    top: 0;
+  }
+  
+  .menu .border-bottom {
+    bottom: 0;
+    transform-origin: bottom right;
+  }
+  
+  .menu .border-top {
+    transform-origin: top left;
+  }
+  
+  .menu .border-left {
+    transform-origin: bottom left;
+  }
+  
+  .menu .border-right {
+    left: auto;
+    right: 0;
+    transform-origin: top right;
+  }
+  
+  .menu a:hover .border-top,
+  .menu a:hover .border-bottom {
+    transform: scaleX(1);
+  }
+  
+  .menu a:hover .border-left,
+  .menu a:hover .border-right {
+    transform: scaleY(1);
+  }
+  
+  .menu a:hover .border-right {
+    transition-delay: var(--transition-delay);
+  }
+  
+  .menu a:hover .border-bottom {
+    transition-delay: calc(var(--transition-delay) * 2);
+  }
+  
+  .menu a:hover .border-left {
+    transition-delay: calc(var(--transition-delay) * 3);
+  }
+  
+  
+  /* Animaciones de la navbar
+  â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“ */
+  .menu[data-animation="diagonal"] .border-left {
+    transform-origin: top left;
+  }
+  
+  .menu[data-animation="diagonal"] .border-right,
+  .menu[data-animation="diagonal"] .border-bottom {
+    transform-origin: bottom right;
+  }
+  
+  .menu[data-animation="diagonal"] a:hover [class^=border]{
+    transition-delay: 0s;
+  }
+
+
+  /*DiseÃ±o para carrusel*/
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .b-example-divider {
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  }
+
+  .b-example-vr {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 100vh;
+  }
+
+  .bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+  }
+
+  .nav-scroller {
+    position: relative;
+    z-index: 2;
+    height: 2.75rem;
+    overflow-y: hidden;
+  }
+
+  .nav-scroller .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    margin-top: -1px;
+    overflow-x: auto;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+
+  /*diseÃ±o de tarjetas a los productos*/
+  .contenedor:hover .imagen {-webkit-transform:scale(1.3);transform:scale(1.3);}
+  .contenedor {overflow:hidden;}
+
+
+/* BackToTop button css */
+#scroll {
+  position:fixed;
+  right:10px;
+  bottom:10px;
+  cursor:pointer;
+  width:50px;
+  height:50px;
+  background-color:#000000;
+  text-indent:-9999px;
+  display:none;
+  -webkit-border-radius:60px;
+  -moz-border-radius:60px;
+  border-radius:60px
+}
+#scroll span {
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-left:-8px;
+  margin-top:-12px;
+  height:0;
+  width:0;
+  border:8px solid transparent;
+  border-bottom-color:#ffffff;
+}
+#scroll:hover {
+  background-color:#01589634;
+  opacity:1;filter:"alpha(opacity=100)";
+  -ms-filter:"alpha(opacity=100)";
+}
