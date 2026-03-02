@@ -8,11 +8,12 @@ El proyecto está enfocado en ofrecer una experiencia simple, intuitiva y segura
 
 ## 🚀 Tecnologías utilizadas
 
-- [CodeIgniter 3/4](https://codeigniter.com/) - Framework PHP
+- [CodeIgniter 3](https://codeigniter.com/) - Framework PHP
 - [MySQL](https://www.mysql.com/) - Base de datos relacional
 - [Bootstrap](https://getbootstrap.com/) - Estilos y diseño responsivo
 - [jQuery](https://jquery.com/) - Interactividad en frontend
 - HTML5, CSS3, JavaScript
+- PHP 7
 
 ---
 
