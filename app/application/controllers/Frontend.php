@@ -33,13 +33,33 @@ class FrontEnd extends CI_Controller
 
 	}
 
-		public function ajuste($id_usu=0,$token=""){
-		verifica_sesion($id_usu,$token);
+public function ajuste($id_usu=0,$token=""){
+	verifica_sesion($id_usu,$token);
+	$this->load->helper("mensaje");
 
-		$this->load->helper("mensaje");
-		$this->load->view("ajustes_view");
+	// Hacemos los JOIN directamente aquí porque la vista "datos_cliente" no existe en la DB
+	$datos = $this->db
+		->select("cliente.nombre, ap, am, usuario.nombre as usuario, correo, ciudad, fec_registro")
+		->from("cliente")
+		->join("usuario", "cliente.id_usu = usuario.id", "inner")
+		->where("cliente.id", $this->session->id_cli)
+		->get()
+		->result_array();
 
-	}
+	// Empaquetamos los datos para enviarlos a la vista HTML
+	$data = array(
+		"nombre"       => $datos["0"]["nombre"],
+		"ap"           => $datos["0"]["ap"],
+		"am"           => $datos["0"]["am"],
+		"usuario"      => $datos["0"]["usuario"],
+		"correo"       => $datos["0"]["correo"],
+		"ciudad"       => $datos["0"]["ciudad"],
+		"fec_registro" => $datos["0"]["fec_registro"]
+	);
+
+	// Le pasamos el arreglo $data a la vista
+	$this->load->view("ajustes_view", $data);
+}
 
 	public function ajustead($id_usu=0,$token=""){
 		verifica_sesion($id_usu,$token);

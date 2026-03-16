@@ -11,13 +11,16 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <link href="http://dtai.uteq.edu.mx/~carlop202/AWI4/PROYECTO/app/static/css/highcharts.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css">
 
   <!-- SCRIPTS HIGHCHARTS -->
-  <script src="http://dtai.uteq.edu.mx/~carlop202/AWI4/PROYECTO/app/static/highcharts/highcharts.js"></script>
-  <script src="http://dtai.uteq.edu.mx/~carlop202/AWI4/PROYECTO/app/static/highcharts/modules/exporting.js"></script>
-  <script src="http://dtai.uteq.edu.mx/~carlop202/AWI4/PROYECTO/app/static/highcharts/modules/export-data.js"></script>
-  <script src="http://dtai.uteq.edu.mx/~carlop202/AWI4/PROYECTO/app/static/highcharts/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
   <script src="<?=base_url()?>static/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="<?=base_url()?>static/js/mensajes.js"></script>
@@ -198,7 +201,7 @@ button[type="submit"]:active {
   </style>
 
 
-  <script src="http://dtai.uteq.edu.mx/~carlop202/AWI4/PROYECTO/app/static/js/jquery-3.6.3.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 
 </head>
 
@@ -411,7 +414,29 @@ setInterval(envio, 1000);
     
 </figure>
 
-<script src="http://dtai.uteq.edu.mx/~carlop202/AWI4/PROYECTO/app/static/js/highcharts-lang-es.js"></script>
+<script>
+Highcharts.setOptions({
+    lang: {
+        contextButtonTitle: "Menú contextual",
+        downloadPNG: "Descargar imagen PNG",
+        downloadJPEG: "Descargar imagen JPEG",
+        downloadPDF: "Descargar documento PDF",
+        downloadSVG: "Descargar imagen SVG",
+        printChart: "Imprimir gráfico",
+        viewFullscreen: "Ver en pantalla completa",
+        exitFullscreen: "Salir de pantalla completa",
+        loading: "Cargando...",
+        months: [
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ],
+        weekdays: [
+            "Domingo", "Lunes", "Martes", "Miércoles",
+            "Jueves", "Viernes", "Sábado"
+        ]
+    }
+});
+</script>
 
 <script src="<?=base_url()?>static/js/grafica.js"></script>
 
@@ -426,7 +451,29 @@ setInterval(envio, 1000);
     
 </figure>
 
-<script src="http://dtai.uteq.edu.mx/~carlop202/AWI4/PROYECTO/app/static/js/highcharts-lang-es.js"></script>
+<script>
+Highcharts.setOptions({
+    lang: {
+        contextButtonTitle: "Menú contextual",
+        downloadPNG: "Descargar imagen PNG",
+        downloadJPEG: "Descargar imagen JPEG",
+        downloadPDF: "Descargar documento PDF",
+        downloadSVG: "Descargar imagen SVG",
+        printChart: "Imprimir gráfico",
+        viewFullscreen: "Ver en pantalla completa",
+        exitFullscreen: "Salir de pantalla completa",
+        loading: "Cargando...",
+        months: [
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ],
+        weekdays: [
+            "Domingo", "Lunes", "Martes", "Miércoles",
+            "Jueves", "Viernes", "Sábado"
+        ]
+    }
+});
+</script>
 
 <script src="<?=base_url()?>static/js/grafica2.js"></script>
   </section>

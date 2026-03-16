@@ -41,15 +41,21 @@ $rs = $this->db
 }
 
 
+// REEMPLAZO DE LA VISTA 'detalle_ventaa'
 public function detalle_venta($corr){
-$rs = $this->db
-		->select("*")
-		->from("detalle_ventaa")
-		->where("correo",$corr)
-		->where("activo",1)
-		->order_by("fech", "desc")
-		->get();
-		return $rs->num_rows() > 0 ? $rs->result() : NULL;
+    $rs = $this->db
+        ->select('venta.id as idven, venta.fech as fech, cliente.correo as correo, COUNT(detalle_venta.id) as numproductos, SUM(detalle_venta.cant * detalle_venta.prec) as total, usuario.activo as activo')
+        ->from('venta')
+        ->join('detalle_venta', 'detalle_venta.id_vent = venta.id', 'inner')
+        ->join('cliente', 'venta.id_cli = cliente.id', 'inner')
+        ->join('usuario', 'cliente.id_usu = usuario.id', 'inner')
+        ->where('cliente.correo', $corr)
+        ->where('usuario.activo', 1)
+        ->group_by('venta.id')
+        ->order_by('fech', 'desc')
+        ->get();
+        
+    return $rs->num_rows() > 0 ? $rs->result() : NULL;
 }
 
 public function ventas(){
@@ -62,11 +68,17 @@ $rs = $this->db
 		return $rs->num_rows() > 0 ? $rs->result() : NULL;
 }
 
+// REEMPLAZO DEL PROCEDURE 'telefonos'
 public function tel(){
-
-$rs = $this->db->query("CALL telefonos()");
-
-		return $rs->num_rows() > 0 ? $rs->result() : NULL;
+    $rs = $this->db
+        ->select('CONCAT(cliente.nombre, " ", ap, " ", am) as nombre, telefono')
+        ->from('cliente')
+        ->join('telefono', 'cliente.id = telefono.id_cli', 'inner')
+        ->join('usuario', 'cliente.id_usu = usuario.id', 'inner')
+        ->where('activo', 1)
+        ->get();
+        
+    return $rs->num_rows() > 0 ? $rs->result() : NULL;
 }
 
 public function ventas_reportes($inicio,$fin){
@@ -92,13 +104,17 @@ $rs = $this->db
 }
 
 
+// REEMPLAZO DE LA VISTA 'venta_detalle'
 public function venta_detalle($id){
-$rs = $this->db
-		->select("*")
-		->from("venta_detalle")
-		->where("id_vent",$id)
-		->get();
-		return $rs->num_rows() > 0 ? $rs->result() : NULL;
+    $rs = $this->db
+        ->select('venta.id as id_vent, producto.nombre as nombre, producto.cantidad as cantidad, detalle_venta.prec as prec, (detalle_venta.cant * detalle_venta.prec) as subtotal, detalle_venta.cant as cant')
+        ->from('detalle_venta')
+        ->join('producto', 'detalle_venta.id_pro = producto.id', 'inner')
+        ->join('venta', 'detalle_venta.id_vent = venta.id', 'inner')
+        ->where('venta.id', $id)
+        ->get();
+        
+    return $rs->num_rows() > 0 ? $rs->result() : NULL;
 }
 
 public function venta_mes(){

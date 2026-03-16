@@ -136,7 +136,6 @@ public function verificausuario(){
 
 		$password = $this->input->post("password");
 		$tipo = "cliente";
-		$nombreu = "123";
 		$activo = "1";		
 
 		$nombre = $this->input->post("nombre");
@@ -154,6 +153,7 @@ public function verificausuario(){
 		$fec_registro = $fecc;
 		$latitud = $this->input->post("latitud") ?? null;
 		$longitud = $this->input->post("longitud") ?? null;
+        $nombreu = $this->usuarios_model->generar_nombre_usuario($nombre, $ap);
 
 		$telefono = $this->input->post("tel");
 
@@ -234,7 +234,6 @@ echo json_encode($obj);
 
 		$password = $this->input->post("password");
 		$tipo = "administrador";
-		$nombreu = "123";
 		$activo = "1";		
 
 		$nombre = $this->input->post("nombre");
@@ -242,6 +241,7 @@ echo json_encode($obj);
 		$am = $this->input->post("am");
 		$correo = $this->input->post("correo");
 		$id_usu = $iduss;
+        $nombreu = $this->usuarios_model->generar_nombre_usuario($nombre, $ap);
 		//$foto = $this->input->post("foto");
 		$fec_registro = $fecc;
 
@@ -318,6 +318,9 @@ echo json_encode($obj);
 
 		
 		$this->session->set_userdata( "nombre", $nombre);
+        
+        $nuevo_usuario = $this->usuarios_model->generar_nombre_usuario($nombre, $ap, $id_usu);
+		$this->usuarios_model->update_nombre_usuario($id_usu, $nuevo_usuario);
 
 
 

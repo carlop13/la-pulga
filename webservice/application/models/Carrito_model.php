@@ -208,6 +208,10 @@ class Carrito_model extends CI_Model{
         );
 
         $this->db->insert( "detalle_venta" , $data );
+        // REEMPLAZO DEL TRIGGER 'cant' (Resta de stock)
+		$this->db->set('cantidad', 'cantidad - ' . (int)$canti, FALSE)
+         ->where('id', $producto->id_pro)
+         ->update('producto');
         $id = $id+1;
 
         $tot = $tot+$subtotal;

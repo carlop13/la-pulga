@@ -255,9 +255,9 @@
 
 
 
-    <script src="<?=base_url()?>static/js/pedidos.js"></script>
+    <script src="<?=base_url()?>static/js/pedidos.js?v=3"></script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZ7TvV1KlSm2HKZbZ0GvkovPDFkV1O-0Y&callback=cargaMapa" 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9NVdgMz2GdZa-UEpa4fyHkjcO0b60xiQ&callback=cargaMapa" 
     type="text/javascript"></script>
 </body>
 </html>
